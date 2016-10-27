@@ -6,6 +6,11 @@ import WebpackDevServer from 'webpack-dev-server';
 
 const path = require('path');
 
+/*
+ * tsd install webpack --save
+ * tsd install webpack-env --save
+ */
+
 /**
  * Run development server.
  */
@@ -14,6 +19,7 @@ gulp.task('development', () => {
 
     const server = new WebpackDevServer(webpack(webpackConfig), {
         hot: true,
+        inline: true,
         historyApiFallback: true
     });
 

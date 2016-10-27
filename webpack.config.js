@@ -3,11 +3,16 @@ var path = require('path');
 
 const htmlWebpackPlugin = require('html-webpack-plugin')
 const DashboardPlugin = require('webpack-dashboard/plugin');
+86
 
 module.exports = {
     devtool: 'eval-source-map',
     entry: {
-        app: path.join(__dirname, 'app', 'src', 'app'),
+        app: [
+            'webpack-dev-server/client?http://0.0.0.0:3000',
+            'webpack/hot/only-dev-server',
+            path.join(__dirname, 'app', 'src', 'app')
+        ],
         vendor: path.join(__dirname, 'app', 'src', 'vendor')
     },
     output: {
@@ -56,12 +61,9 @@ module.exports = {
                 },
             }
         }),
-        new DashboardPlugin()
-    ],
-    devServer: {
-        contentBase: './app/src/public',
-        historyApiFallback: true,
-        quiet: true,
-        stats: 'minimal'
-    }
+        new DashboardPlugin(),
+        new webpack.optimize.OccurrenceOrderPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoErrorsPlugin()
+    ]
 };

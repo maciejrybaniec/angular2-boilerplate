@@ -1,1 +1,3 @@
-console.log('boom!');
+if (module.hot) {
+  module.hot.accept();
+}
